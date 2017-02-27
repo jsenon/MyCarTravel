@@ -13,6 +13,7 @@ type TripAnswer struct {
 	Destination []string
 	Origin []string
 	answer map[string]map[string]map[string]map[string]float64
+	status string
 }
 
 /*
