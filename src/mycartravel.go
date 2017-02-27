@@ -7,7 +7,7 @@ import (
 )
 
 // Define a struct for api distance matrix
-type Trip struct {
+type Town struct {
 	TownFrom string
 	TownTo   string
 }
@@ -46,10 +46,12 @@ type TripAnswer struct {
 */
 
 func main() {
-	trip := Trip{"Toulouse", "Toulouse"}
+	env := []Town{
+		{"Toulouse", "Toulouse"},
+	}
 	fmt.Println("Enter Origin:")
-	fmt.Scanf("%s", &trip.TownFrom)
+	fmt.Scanf("%s", &env[0].TownFrom)
 	fmt.Println("Enter Destination:")
-	fmt.Scanf("%s", &trip.TownTo)
-	fmt.Println("Trip", trip)
+	fmt.Scanf("%s", &env[0].TownTo)
+	fmt.Println("Trip", env)
 }
