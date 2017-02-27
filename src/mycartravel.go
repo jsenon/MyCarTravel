@@ -56,6 +56,7 @@ https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=
 // How to ask google map
 // How to retrieve info and store it
 // How to retrieve toll
+// Build Web Server
 
 func main() {
 	env := []Town{
