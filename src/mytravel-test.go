@@ -10,9 +10,9 @@ type Trip struct {
 
 // Define a struct for api distance matrix answer
 type TripAnswer struct {
-	Destination string
-	Origin string
-	answer map[]string
+	Destination []string
+	Origin []string
+	answer map[string]map[string]map[string]map[string]float64
 }
 
 /*
