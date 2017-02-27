@@ -14,8 +14,8 @@ type Trip struct {
 
 // Define a struct for api distance matrix answer
 type TripAnswer struct {
-	Destination []string
-	Origin      []string
+	Destination string
+	Origin      string
 	answer      map[string]map[string]map[string]map[string]float64
 	status      string
 }
@@ -46,15 +46,10 @@ type TripAnswer struct {
 */
 
 func main() {
-	var tripori string
-	var tripdest string
-	fmt.println("Enter Origin:")
-	fmt.scanf("%s", &tripori)
-	fmt.println("Enter Destination:")
-	fmt.scanf("%s", &tripdest)
-	TripAnswer.Origin = *tripori
-	TripAnswer.Destination = *tripdest
-	fmt.Println("Origin", *tripori)
-	fmt.Println("Destination", *tripdest)
-
+	trip := Trip{"Toulouse", "Toulouse"}
+	fmt.Println("Enter Origin:")
+	fmt.Scanf("%s", &trip.TownFrom)
+	fmt.Println("Enter Destination:")
+	fmt.Scanf("%s", &trip.TownTo)
+	fmt.Println("Trip", trip)
 }
