@@ -1,5 +1,3 @@
-//https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=YOURAPIKEY
-
 package main
 
 import (
@@ -28,6 +26,8 @@ type TripAnswer struct {
 }
 
 /*
+https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=YOURAPIKEY
+
 {
    "destination_addresses" : [ "New York, NY, USA" ],
    "origin_addresses" : [ "Washington, DC, USA" ],
@@ -51,6 +51,11 @@ type TripAnswer struct {
    "status" : "OK"
 }
 */
+
+// TO DO
+// How to ask google map
+// How to retrieve info and store it
+// How to retrieve toll
 
 func main() {
 	env := []Town{
