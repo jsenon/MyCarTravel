@@ -12,6 +12,13 @@ type Town struct {
 	TownTo   string
 }
 
+// Define Price
+type GazPrice struct {
+	TypeGas string
+	Price   float64
+	Devise  string
+}
+
 // Define a struct for api distance matrix answer
 type TripAnswer struct {
 	Destination string
