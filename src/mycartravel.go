@@ -28,13 +28,6 @@ type GazPrice struct {
 	Devise  string
 }
 
-// Define My Query
-/*var distanceMatrixAPI = &apiConfig{
-	host:            "https://maps.googleapis.com",
-	path:            "/maps/api/distancematrix/json",
-	acceptsClientID: true,
-}*/
-
 // Answer Structure coming from google API
 type DistanceMatrixResponse struct {
 
