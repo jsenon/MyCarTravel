@@ -40,19 +40,16 @@ type DistanceMatrixResponse struct {
 
 // DistanceMatrixElementsRow is a row of distance elements.
 type DistanceMatrixElementsRow struct {
+	//Elements contains an array Distance Duration and Status
 	Elements []*DistanceMatrixElement `json:"elements"`
 }
 
-// Definition of DistanceElement
-// Define time.Duration and uncomment
-// Define distance and uncomment
 type DistanceMatrixElement struct {
 	Status string `json:"status"`
 	// Duration is the length of time it takes to travel this route.
-	//Duration time.Duration `json:"duration"`
 	Duration Duration `json:"duration"`
 	// DurationInTraffic is the length of time it takes to travel this route considering traffic.
-	//DurationInTraffic Duration `json:"duration_in_traffic"`
+	DurationInTraffic Duration `json:"duration_in_traffic"`
 	// Distance is the total distance of this route.
 	Distance Distance `json:"distance"`
 }
