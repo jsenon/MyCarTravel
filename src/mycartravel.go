@@ -29,11 +29,11 @@ type GazPrice struct {
 }
 
 // Define My Query
-var distanceMatrixAPI = &apiConfig{
+/*var distanceMatrixAPI = &apiConfig{
 	host:            "https://maps.googleapis.com",
 	path:            "/maps/api/distancematrix/json",
 	acceptsClientID: true,
-}
+}*/
 
 // Answer Structure coming from google API
 type DistanceMatrixResponse struct {
@@ -102,6 +102,7 @@ func main() {
 	fmt.Println("your key", apiKey)
 	// Launch connexion to maps google
 	res, erro := http.Get("https://maps.googleapis.com/maps/api/distancematrix/json" + "?units=imperial&origins=Toulouse&destinations=Nantes" + "&key=" + apiKey)
+	defer res.Body.Close()
 	if erro != nil {
 		panic(erro.Error())
 	}
