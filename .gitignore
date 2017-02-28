@@ -2,3 +2,4 @@
 *.sublime-project
 src/API.key
 source-env
+bin/

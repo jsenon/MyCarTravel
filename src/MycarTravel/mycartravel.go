@@ -25,7 +25,6 @@ type GazPrice struct {
 
 // Answer Structure coming from google API
 type DistanceMatrixResponse struct {
-
 	// OriginAddresses contains an array of addresses as returned by the API from your original request.
 	OriginAddresses []string `json:"origin_addresses"`
 	// DestinationAddresses contains an array of addresses as returned by the API from your original request.
@@ -41,6 +40,7 @@ type DistanceMatrixElementsRow struct {
 }
 
 type DistanceMatrixElement struct {
+	// Elements Status Code
 	Status string `json:"status"`
 	// Duration is the length of time it takes to travel this route.
 	Duration Duration `json:"duration"`
@@ -153,11 +153,20 @@ func main() {
 
 	// Initialization
 	var mapsanswer DistanceMatrixResponse
+	var Addfrom string
+	var Addto string
+
 	// Export your API Key
 	apiKey := os.Getenv("GOOGLE_APIKEY")
 	fmt.Println("your key", apiKey)
+	// Ask From
+	fmt.Println("Enter your Origin Address: ")
+	fmt.Scanf("%s", &Addfrom)
+	// Ask To
+	fmt.Println("Enter your Destination Address: ")
+	fmt.Scanf("%s", &Addto)
 	// Launch connexion to maps google
-	res, erro := http.Get("https://maps.googleapis.com/maps/api/distancematrix/json" + "?units=metric&origins=Toulouse&destinations=Nantes" + "&key=" + apiKey)
+	res, erro := http.Get("https://maps.googleapis.com/maps/api/distancematrix/json" + "?units=metric&origins=" + Addfrom + "&destinations=" + Addto + "&key=" + apiKey)
 	if erro != nil {
 		// handle error
 		return
