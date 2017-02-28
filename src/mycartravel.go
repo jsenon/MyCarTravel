@@ -1,3 +1,7 @@
+//
+// Based on Google Maps API
+//
+
 package main
 
 import (
