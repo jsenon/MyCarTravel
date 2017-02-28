@@ -12,17 +12,8 @@ import (
 )
 
 // TO DO
-// How to ask google map
-// How to retrieve toll
+// Construct API Call with parameters
 // Build Web Server
-// Fisrt Version with API Call
-// Seconf Version with google map go plugin
-// Define a struct for api distance matrix
-
-type Town struct {
-	TownFrom string
-	TownTo   string
-}
 
 // Define Price
 type GazPrice struct {
