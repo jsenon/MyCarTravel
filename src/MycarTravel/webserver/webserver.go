@@ -18,8 +18,3 @@ func Mytravelcarweb(res http.ResponseWriter, req *http.Request) {
 		</html>`,
 	)
 }
-
-//func main() {
-//	http.HandleFunc("/hello", hello)
-//	http.ListenAndServe(":9000", nil)
-//}
