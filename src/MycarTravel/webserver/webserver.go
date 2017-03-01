@@ -7,10 +7,12 @@ import (
 	"net/http"
 )
 
+// Test Person Struct used on func Getdistance
 type Person struct {
 	Name string //exported field since it begins with a capital letter
 }
 
+//Test Page inline HTML Code
 func Mytravelcarweb(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set(
 		"Content-Type",
@@ -43,15 +45,28 @@ func Mytravelcarweb(res http.ResponseWriter, req *http.Request) {
 	fmt.Fprintln(res, req.PostForm["Origin"])
 }
 
+// Test Page for template value replacement
 func Getdistance(res http.ResponseWriter, req *http.Request) {
 	user := Person{Name: "Julien"}
 	Render(res, "templates/indexbis.html", user)
 }
 
+// Starting point of MyTravelCar
 func Index(res http.ResponseWriter, req *http.Request) {
 	Render(res, "templates/index.html", nil)
 }
 
+// For future Usage, Check and validate fields and redirect to results page
+func CheckFields(res http.ResponseWriter, req *http.Request) {
+	http.Redirect(w, r, "/results", http.StatusSeeOther)
+}
+
+// Results Page
+func Results(res http.ResponseWriter, req *http.Request) {
+	Render(res, "templates/results.html", nil)
+}
+
+// Function for Rendering templates
 func Render(w http.ResponseWriter, filename string, data interface{}) {
 	tmpl, err := template.ParseFiles(filename)
 	if err != nil {

@@ -165,6 +165,8 @@ func main() {
 	http.HandleFunc("/mycartravel", webserver.Mytravelcarweb)
 	http.HandleFunc("/index", webserver.Index)
 	http.HandleFunc("/getdistance", webserver.Getdistance)
+	http.HandleFunc("/send", webserver.CheckFields)
+	http.HandleFunc("/results", webserver.Results)
 
 	// Init WebServer
 	http.ListenAndServe(":9000", nil)
