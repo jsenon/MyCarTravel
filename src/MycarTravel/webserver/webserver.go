@@ -29,6 +29,13 @@ func Mytravelcarweb(res http.ResponseWriter, req *http.Request) {
 		</body>
 		</html>`,
 	)
+	// The Form struct is a map, which keys are strings and values are a slice of strings if we use ParseForm
+	// A struct that contains 2 maps if we use ParseMultipartForm The first map has keys that are strings and values that are slices of string while the second map is empty.
+	// map[maps:[getdistance] thread:[123] Origin:[Toulouse] Destination:[Nantes]]
 	req.ParseForm()
-	fmt.Fprintln(res, req.Form)
+	//fmt.Fprintln(res, req.Form)
+	fmt.Fprintln(res, req.PostForm)
+	fmt.Fprintln(res, req.PostForm["Destination"])
+	fmt.Fprintln(res, req.PostForm["Origin"])
+
 }

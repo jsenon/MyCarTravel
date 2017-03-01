@@ -15,6 +15,7 @@ import (
 // TO DO
 // Construct API Call with parameters
 // Build Web Server
+// Build API to called from webserver Input:Origin,Destination Output:JSON Duration Distance
 // Build ouside main a type package
 
 // Define Price
