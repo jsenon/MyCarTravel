@@ -157,12 +157,13 @@ func main() {
 	var Addfrom string
 	var Addto string
 
-	// Export your API Key
+	// Import your API Key
 	apiKey := os.Getenv("GOOGLE_APIKEY")
 	// Redirect Page
 	http.HandleFunc("/mycartravel", webserver.Mytravelcarweb)
 	// Init WebServer
 	http.ListenAndServe(":9000", nil)
+	// Print API Key to be sure that it's exported
 	fmt.Println("your key", apiKey)
 	// Ask From
 	fmt.Println("Enter your Origin Address: ")
@@ -174,6 +175,8 @@ func main() {
 	res, erro := http.Get("https://maps.googleapis.com/maps/api/distancematrix/json" + "?units=metric&origins=" + Addfrom + "&destinations=" + Addto + "&key=" + apiKey)
 	if erro != nil {
 		// handle error
+		fmt.Println("error:", erro)
+		fmt.Println("res:", res)
 		return
 	}
 	defer res.Body.Close()

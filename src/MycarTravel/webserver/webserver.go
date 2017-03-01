@@ -6,6 +6,7 @@ import (
 )
 
 func Mytravelcarweb(res http.ResponseWriter, req *http.Request) {
+	//res.ParseForm()
 	res.Header().Set(
 		"Content-Type",
 		"text/html",
