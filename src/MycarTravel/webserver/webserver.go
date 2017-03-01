@@ -2,9 +2,14 @@ package webserver
 
 import (
 	"fmt"
+	"html/template"
 	"io"
 	"net/http"
 )
+
+type Person struct {
+	Name string //exported field since it begins with a capital letter
+}
 
 func Mytravelcarweb(res http.ResponseWriter, req *http.Request) {
 
@@ -38,4 +43,25 @@ func Mytravelcarweb(res http.ResponseWriter, req *http.Request) {
 	fmt.Fprintln(res, req.PostForm["Destination"])
 	fmt.Fprintln(res, req.PostForm["Origin"])
 
+}
+
+func Getdistance(res http.ResponseWriter, req *http.Request) {
+	t := template.New("custom template")
+	t, _ = t.ParseFiles("templates/indexbis.html")
+	user := Person{Name: "Julien"}
+	t.Execute(res, user)
+}
+
+func Index(res http.ResponseWriter, req *http.Request) {
+	Render(res, "templates/index.html", nil)
+}
+
+func Render(w http.ResponseWriter, filename string, data interface{}) {
+	tmpl, err := template.ParseFiles(filename)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+	if err := tmpl.Execute(w, data); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }

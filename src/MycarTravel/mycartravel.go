@@ -162,6 +162,9 @@ func main() {
 	apiKey := os.Getenv("GOOGLE_APIKEY")
 	// Redirect Page
 	http.HandleFunc("/mycartravel", webserver.Mytravelcarweb)
+	http.HandleFunc("/index", webserver.Index)
+	http.HandleFunc("/getdistance", webserver.Getdistance)
+
 	// Init WebServer
 	http.ListenAndServe(":9000", nil)
 	// Print API Key to be sure that it's exported
