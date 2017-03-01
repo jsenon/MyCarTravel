@@ -1,12 +1,13 @@
 package webserver
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 )
 
 func Mytravelcarweb(res http.ResponseWriter, req *http.Request) {
-	//res.ParseForm()
+
 	res.Header().Set(
 		"Content-Type",
 		"text/html",
@@ -20,7 +21,7 @@ func Mytravelcarweb(res http.ResponseWriter, req *http.Request) {
 		<title>MyCarTravel</title>
 		</head>
 		<body>
-		<form action="http://127.0.0.1:9000/mycartravel?hello=world&thread=123" method="post" enctype="application/x-www-form-urlencoded">
+		<form action="http://127.0.0.1:9000/mycartravel?maps=getdistance&thread=123" method="post" enctype="application/x-www-form-urlencoded">
 		<input type="text" name="Origin" value="Toulouse"/>
 		<input type="text" name="Destination" value="Nantes"/>
 		<input type="submit"/>
@@ -28,4 +29,6 @@ func Mytravelcarweb(res http.ResponseWriter, req *http.Request) {
 		</body>
 		</html>`,
 	)
+	req.ParseForm()
+	fmt.Fprintln(res, req.Form)
 }
