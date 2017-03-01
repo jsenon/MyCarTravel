@@ -58,6 +58,8 @@ func Index(res http.ResponseWriter, req *http.Request) {
 
 // For future Usage, Check and validate fields and redirect to results page
 func CheckFields(res http.ResponseWriter, req *http.Request) {
+	// Future Check fields
+	// Launch API Google
 	http.Redirect(res, req, "/results", http.StatusSeeOther)
 }
 
