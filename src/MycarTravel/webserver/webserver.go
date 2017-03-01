@@ -12,7 +12,6 @@ type Person struct {
 }
 
 func Mytravelcarweb(res http.ResponseWriter, req *http.Request) {
-
 	res.Header().Set(
 		"Content-Type",
 		"text/html",
@@ -42,14 +41,11 @@ func Mytravelcarweb(res http.ResponseWriter, req *http.Request) {
 	fmt.Fprintln(res, req.PostForm)
 	fmt.Fprintln(res, req.PostForm["Destination"])
 	fmt.Fprintln(res, req.PostForm["Origin"])
-
 }
 
 func Getdistance(res http.ResponseWriter, req *http.Request) {
-	t := template.New("custom template")
-	t, _ = t.ParseFiles("templates/indexbis.html")
 	user := Person{Name: "Julien"}
-	t.Execute(res, user)
+	Render(res, "templates/indexbis.html", user)
 }
 
 func Index(res http.ResponseWriter, req *http.Request) {
