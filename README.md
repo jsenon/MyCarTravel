@@ -19,7 +19,7 @@ $ go build MyCarTravel
 
 Run WebApp
 ```
-$ export export GOOGLE_APIKEY=YOURAPIKEY
+$ export GOOGLE_APIKEY=YOURAPIKEY
 $ bin/MyCarTravel
 ```
 
