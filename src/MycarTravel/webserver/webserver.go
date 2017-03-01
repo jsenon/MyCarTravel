@@ -58,7 +58,7 @@ func Index(res http.ResponseWriter, req *http.Request) {
 
 // For future Usage, Check and validate fields and redirect to results page
 func CheckFields(res http.ResponseWriter, req *http.Request) {
-	http.Redirect(w, r, "/results", http.StatusSeeOther)
+	http.Redirect(res, req, "/results", http.StatusSeeOther)
 }
 
 // Results Page
