@@ -1,10 +1,5 @@
 package webserver
 
-import (
-	"io"
-	"net/http"
-)
-
 func Mytravelcarweb(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set(
 		"Content-Type",
