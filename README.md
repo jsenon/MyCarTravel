@@ -28,8 +28,8 @@ Command line function is also available in program
 ### Access
 
 Webserver socket created on 127.0.0.1:9000
-URL http://127.0.0.1:9000/index
+URL http://127.0.0.1:9000/hello
 
 ### Todo
 
-Print result on dedicated webpage
+Result in HTML page
