@@ -1,6 +1,8 @@
 package webserver
 
 import (
+	"encoding/json"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -17,6 +19,49 @@ func Render(w http.ResponseWriter, filename string, data interface{}) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }*/
+
+// Answer Structure coming from google API
+type DistanceMatrixResponse struct {
+	// OriginAddresses contains an array of addresses as returned by the API from your original request.
+	OriginAddresses []string `json:"origin_addresses"`
+	// DestinationAddresses contains an array of addresses as returned by the API from your original request.
+	DestinationAddresses []string `json:"destination_addresses"`
+	// Rows contains an array of elements.
+	Rows []DistanceMatrixElementsRow `json:"rows"`
+}
+
+// DistanceMatrixElementsRow is a row of distance elements.
+type DistanceMatrixElementsRow struct {
+	//Elements contains an array Distance Duration and Status
+	Elements []*DistanceMatrixElement `json:"elements"`
+}
+
+type DistanceMatrixElement struct {
+	// Elements Status Code
+	Status string `json:"status"`
+	// Duration is the length of time it takes to travel this route.
+	Duration Duration `json:"duration"`
+	// DurationInTraffic is the length of time it takes to travel this route considering traffic.
+	DurationInTraffic Duration `json:"duration_in_traffic"`
+	// Distance is the total distance of this route.
+	Distance Distance `json:"distance"`
+}
+
+type Distance struct {
+	// HumanReadable is the human friendly distance. This is rounded and in an appropriate unit for the
+	// request. The units can be overriden with a request parameter.
+	HumanReadable string `json:"text"`
+	// Meters is the numeric distance, always in meters. This is intended to be used only in
+	// algorithmic situations, e.g. sorting results by some user specified metric.
+	Meters int `json:"value"`
+}
+
+type Duration struct {
+	// Value indicates the duration, in seconds.
+	Value int64 `json:"value"`
+	// Text contains a human-readable representation of the duration.
+	Text string `json:"text"`
+}
 
 var MyApiKey = os.Getenv("GOOGLE_APIKEY")
 
@@ -41,7 +86,7 @@ func Index(res http.ResponseWriter, req *http.Request) {
 	    		</div>
 	    		<div>
 	    			<label>Your Destination:</label>
-	    			<input type="text" name="origin">  
+	    			<input type="text" name="destination">  
 	    		</div>
 	    		<div>
 	    			<input type="submit" value="Send Calculation">
@@ -70,9 +115,34 @@ func Index(res http.ResponseWriter, req *http.Request) {
 
 // For future Usage, Check and validate fields and redirect to results page
 func CheckFields(res http.ResponseWriter, req *http.Request) {
-	// Future Check fields
-	// Launch API Google
-	http.Redirect(res, req, "/results", http.StatusSeeOther)
+	// Retrieve Input User from Index func
+	// Launch API Google with input
+	// Redirect to results with google's answer
+	var Depart string
+	var Finish string
+	var mapsanswer DistanceMatrixResponse
+	req.ParseForm()
+	//fmt.Fprintln(res, req.Form)
+	//fmt.Fprintln(res, req.FormValue("origin"))
+	Depart = req.FormValue("origin")
+	Finish = req.FormValue("destination")
+	url, erro := http.Get("https://maps.googleapis.com/maps/api/distancematrix/json" + "?units=metric&origins=" + Depart + "&destinations=" + Finish + "&key=" + MyApiKey)
+	if erro != nil {
+		// handle error
+		fmt.Println("error:", erro)
+		fmt.Println("res:", res)
+		return
+	}
+	defer url.Body.Close()
+	if erro := json.NewDecoder(url.Body).Decode(&mapsanswer); erro != nil {
+		return
+	}
+	//fmt.Fprintln(res, url)
+	fmt.Fprintln(res, mapsanswer.OriginAddresses[0])
+	fmt.Fprintln(res, mapsanswer.DestinationAddresses[0])
+	fmt.Fprintln(res, mapsanswer.Rows[0].Elements[0].Duration.Text)
+	fmt.Fprintln(res, mapsanswer.Rows[0].Elements[0].Distance.HumanReadable)
+	//http.Redirect(res, req, "/results", http.StatusSeeOther)
 }
 
 // Results Page

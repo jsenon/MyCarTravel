@@ -151,8 +151,6 @@ units=imperial returns distances in miles and feet.
 
 */
 
-var ApiKey string
-
 func main() {
 
 	// Initialization
@@ -160,7 +158,7 @@ func main() {
 	var Addfrom string
 	var Addto string
 
-	// Import your API Key
+	// Import your API Key for Command Line function Only
 	ApiKey := os.Getenv("GOOGLE_APIKEY")
 
 	// Redirect Page
