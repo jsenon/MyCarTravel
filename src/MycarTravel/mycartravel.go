@@ -11,7 +11,11 @@ import (
 
 // TO DO
 // result in HTML
-// use template instead inline
+// use template instead inline HTML
+// catch error exeption
+// ask option values
+// sublime HTML page
+
 /*
 https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Toulouse&destinations=Nantes&key=YOURAPIKEY
 
