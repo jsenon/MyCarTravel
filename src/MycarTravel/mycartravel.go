@@ -151,6 +151,8 @@ units=imperial returns distances in miles and feet.
 
 */
 
+var ApiKey string
+
 func main() {
 
 	// Initialization
@@ -159,12 +161,10 @@ func main() {
 	var Addto string
 
 	// Import your API Key
-	apiKey := os.Getenv("GOOGLE_APIKEY")
+	ApiKey := os.Getenv("GOOGLE_APIKEY")
 
 	// Redirect Page
-	http.HandleFunc("/mycartravel", webserver.Mytravelcarweb)
-	http.HandleFunc("/index", webserver.Index)
-	http.HandleFunc("/getdistance", webserver.Getdistance)
+	http.HandleFunc("/hello", webserver.Index)
 	http.HandleFunc("/send", webserver.CheckFields)
 	http.HandleFunc("/results", webserver.Results)
 
@@ -172,7 +172,7 @@ func main() {
 	http.ListenAndServe(":9000", nil)
 
 	// Print API Key to be sure that it's exported
-	fmt.Println("your key", apiKey)
+	fmt.Println("your key", ApiKey)
 	// Ask From
 	fmt.Println("Enter your Origin Address: ")
 	fmt.Scanf("%s", &Addfrom)
@@ -180,7 +180,7 @@ func main() {
 	fmt.Println("Enter your Destination Address: ")
 	fmt.Scanf("%s", &Addto)
 	// Launch connexion to maps google
-	res, erro := http.Get("https://maps.googleapis.com/maps/api/distancematrix/json" + "?units=metric&origins=" + Addfrom + "&destinations=" + Addto + "&key=" + apiKey)
+	res, erro := http.Get("https://maps.googleapis.com/maps/api/distancematrix/json" + "?units=metric&origins=" + Addfrom + "&destinations=" + Addto + "&key=" + ApiKey)
 	if erro != nil {
 		// handle error
 		fmt.Println("error:", erro)
