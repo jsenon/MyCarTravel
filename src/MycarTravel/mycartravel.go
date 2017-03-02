@@ -10,11 +10,8 @@ import (
 )
 
 // TO DO
-// Construct API Call with parameters
-// Build Web Server
-// Build API to called from webserver Input:Origin,Destination Output:JSON Duration Distance
-// Build ouside main a type package
-
+// result in HTML
+// use template instead inline
 /*
 https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Toulouse&destinations=Nantes&key=YOURAPIKEY
 
