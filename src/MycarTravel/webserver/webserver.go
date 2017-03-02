@@ -63,6 +63,58 @@ type Duration struct {
 	Text string `json:"text"`
 }
 
+// Mode is for specifying travel mode. Default dirving
+type Mode string
+
+// Avoid is for specifying routes that avoid certain features. Values tolls, highways,ferries,indoor
+type Avoid string
+
+// Units specifies which units system to return human readable results in. Metric or Imperial
+type Units string
+
+// TransitMode is for specifying a transit mode for a request
+type TransitMode string
+
+// TrafficModel specifies traffic prediction model when requesting future directions.
+type TrafficModel string
+
+// Travel mode preferences.
+const (
+	TravelModeDriving   = Mode("driving")
+	TravelModeWalking   = Mode("walking")
+	TravelModeBicycling = Mode("bicycling")
+	TravelModeTransit   = Mode("transit")
+)
+
+// Features to avoid.
+const (
+	AvoidTolls    = Avoid("tolls")
+	AvoidHighways = Avoid("highways")
+	AvoidFerries  = Avoid("ferries")
+)
+
+// Units to use on human readable distances.
+const (
+	UnitsMetric   = Units("metric")
+	UnitsImperial = Units("imperial")
+)
+
+// Transit mode of directions or distance matrix request.
+const (
+	TransitModeBus    = TransitMode("bus")
+	TransitModeSubway = TransitMode("subway")
+	TransitModeTrain  = TransitMode("train")
+	TransitModeTram   = TransitMode("tram")
+	TransitModeRail   = TransitMode("rail")
+)
+
+// Traffic prediction model when requesting future directions.
+const (
+	TrafficModelBestGuess   = TrafficModel("best_guess")
+	TrafficModelOptimistic  = TrafficModel("optimistic")
+	TrafficModelPessimistic = TrafficModel("pessimistic")
+)
+
 var MyApiKey = os.Getenv("GOOGLE_APIKEY")
 
 // Starting point of MyTravelCar
