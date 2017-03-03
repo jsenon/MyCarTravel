@@ -145,7 +145,7 @@ func CheckFields(res http.ResponseWriter, req *http.Request) {
 	Depart = req.FormValue("origin")
 	Finish = req.FormValue("destination")
 	Travelmode = req.FormValue("travelmode")
-	// Check if Origin and Destination exist
+	// Check if Origin and Destination is not blank
 	if Depart != "" && Finish != "" {
 
 		fmt.Println("mode: ", Travelmode)
