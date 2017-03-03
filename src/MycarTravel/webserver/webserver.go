@@ -9,6 +9,8 @@ import (
 )
 
 // Function for Rendering templates
+// filename is relative path form where you run the bin
+
 func Render(w http.ResponseWriter, filename string, data interface{}) {
 	tmpl, err := template.ParseFiles(filename)
 	if err != nil {
