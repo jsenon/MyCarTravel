@@ -5,6 +5,22 @@
 		<title>{{.Title}}</title>
 	</head>
 		<body>
-			<h1>{{.Title}}</h1>
+		<h1 style="color: #5e9ca0;"><span style="color: #2b2301;">{{.Title}}</span></h1>
+		<h2 style="color: #2e6c80;">Your Result:</h2>
+		<table style="height: 21px;" width="390">
+			<tbody>
+				<tr>
+				<td><b>Origin</b></td><td>{{.Origin}}</td>
+				<td><b>Destination</b></td><td>{{.Destination}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<table style="height: 21px;" width="450">
+			<tbody>
+				<tr>
+				<td>It will take {{.Duration}} for {{.Distance}}&nbsp;</td>
+				</tr>
+			</tbody>
+		</table>
 		</body>
 </html>

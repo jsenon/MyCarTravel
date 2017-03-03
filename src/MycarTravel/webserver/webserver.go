@@ -117,6 +117,7 @@ const (
 )
 
 var MyApiKey = os.Getenv("GOOGLE_APIKEY")
+var Mapsanswer DistanceMatrixResponse
 
 // Starting point of MyTravelCar
 func Index(res http.ResponseWriter, req *http.Request) {
@@ -139,7 +140,6 @@ func CheckFields(res http.ResponseWriter, req *http.Request) {
 	var Depart string
 	var Finish string
 	var Travelmode string
-	var mapsanswer DistanceMatrixResponse
 
 	req.ParseForm()
 	Depart = req.FormValue("origin")
@@ -160,17 +160,13 @@ func CheckFields(res http.ResponseWriter, req *http.Request) {
 			return
 		}
 		defer url.Body.Close()
-		if erro := json.NewDecoder(url.Body).Decode(&mapsanswer); erro != nil {
+		if erro := json.NewDecoder(url.Body).Decode(&Mapsanswer); erro != nil {
 			return
 		}
-		if mapsanswer.Rows[0].Elements[0].Status != "OK" {
+		if Mapsanswer.Rows[0].Elements[0].Status != "OK" {
 			http.Redirect(res, req, "/error", http.StatusSeeOther)
 		} else {
-			fmt.Fprintln(res, mapsanswer.OriginAddresses[0])
-			fmt.Fprintln(res, mapsanswer.DestinationAddresses[0])
-			fmt.Fprintln(res, mapsanswer.Rows[0].Elements[0].Duration.Text)
-			fmt.Fprintln(res, mapsanswer.Rows[0].Elements[0].Distance.HumanReadable)
-			fmt.Fprintln(res, mapsanswer.Rows[0].Elements[0].Status)
+			http.Redirect(res, req, "/results", http.StatusSeeOther)
 		}
 		//http.Redirect(res, req, "/results", http.StatusSeeOther)
 	} else {
@@ -182,10 +178,20 @@ func CheckFields(res http.ResponseWriter, req *http.Request) {
 // Results Page
 func Results(res http.ResponseWriter, req *http.Request) {
 	data := struct {
-		Title string
+		Title       string
+		Origin      string
+		Destination string
+		Duration    string
+		Distance    string
 	}{
-		Title: "MyCarTravel Results",
+		Title:       "MyCarTravel Results",
+		Origin:      Mapsanswer.OriginAddresses[0],
+		Destination: Mapsanswer.DestinationAddresses[0],
+		Duration:    Mapsanswer.Rows[0].Elements[0].Duration.Text,
+		Distance:    Mapsanswer.Rows[0].Elements[0].Distance.HumanReadable,
 	}
+
+	// Use Mapsanswer for results screen
 	Render(res, "src/templates/results.html", data)
 }
 
