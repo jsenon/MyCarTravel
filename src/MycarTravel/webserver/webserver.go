@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
-	"log"
 	"net/http"
 	"os"
 )
@@ -164,31 +163,12 @@ func CheckFields(res http.ResponseWriter, req *http.Request) {
 
 // Results Page
 func Results(res http.ResponseWriter, req *http.Request) {
-	const tpl = `
-	<!DOCTYPE html>
-	 	<html>
-		<head>
-	  		<meta charset="UTF-8">
-	  		<title>{{.Title}}</title>
-		</head>
-	    <body>
-	    	<h1>{{.Title}}</h1>
-	   </body>
-	 </html>`
-	check := func(err error) {
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
-	t, err := template.New("webpage").Parse(tpl)
-	check(err)
 	data := struct {
 		Title string
 	}{
 		Title: "MyCarTravel Results",
 	}
-	err = t.Execute(res, data)
-	check(err)
+	Render(res, "src/templates/results.html", data)
 }
 
 func Htmltemplate(res http.ResponseWriter, req *http.Request) {
