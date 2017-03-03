@@ -16,6 +16,9 @@ import (
 // ask option values
 // sublime HTML page
 
+// FIX ME
+// Error with Dest and ori with space
+
 /*
 https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Toulouse&destinations=Nantes&key=YOURAPIKEY
 */
