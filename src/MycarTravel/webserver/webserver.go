@@ -138,15 +138,20 @@ func CheckFields(res http.ResponseWriter, req *http.Request) {
 	// Redirect to results with google's answer
 	var Depart string
 	var Finish string
+	var Travelmode string
 	var mapsanswer DistanceMatrixResponse
+
 	req.ParseForm()
-	//fmt.Fprintln(res, req.Form)
-	//fmt.Fprintln(res, req.FormValue("origin"))
 	Depart = req.FormValue("origin")
 	Finish = req.FormValue("destination")
-	url, erro := http.Get("https://maps.googleapis.com/maps/api/distancematrix/json" + "?units=metric&origins=" + Depart + "&destinations=" + Finish + "&key=" + MyApiKey)
+	Travelmode = req.FormValue("travelmode")
+	fmt.Println("mode: ", Travelmode)
+
+	url, erro := http.Get("https://maps.googleapis.com/maps/api/distancematrix/json" + "?units=metric&origins=" + Depart + "&destinations=" + Finish + "&mode=" + Travelmode + "&key=" + MyApiKey)
+
 	if erro != nil {
 		// handle error
+		http.Redirect(res, req, "/error", http.StatusSeeOther)
 		fmt.Println("error:", erro)
 		fmt.Println("res:", res)
 		return
@@ -155,11 +160,15 @@ func CheckFields(res http.ResponseWriter, req *http.Request) {
 	if erro := json.NewDecoder(url.Body).Decode(&mapsanswer); erro != nil {
 		return
 	}
-	//fmt.Fprintln(res, url)
-	fmt.Fprintln(res, mapsanswer.OriginAddresses[0])
-	fmt.Fprintln(res, mapsanswer.DestinationAddresses[0])
-	fmt.Fprintln(res, mapsanswer.Rows[0].Elements[0].Duration.Text)
-	fmt.Fprintln(res, mapsanswer.Rows[0].Elements[0].Distance.HumanReadable)
+	if mapsanswer.Rows[0].Elements[0].Status != "OK" {
+		http.Redirect(res, req, "/error", http.StatusSeeOther)
+	} else {
+		fmt.Fprintln(res, mapsanswer.OriginAddresses[0])
+		fmt.Fprintln(res, mapsanswer.DestinationAddresses[0])
+		fmt.Fprintln(res, mapsanswer.Rows[0].Elements[0].Duration.Text)
+		fmt.Fprintln(res, mapsanswer.Rows[0].Elements[0].Distance.HumanReadable)
+		fmt.Fprintln(res, mapsanswer.Rows[0].Elements[0].Status)
+	}
 	//http.Redirect(res, req, "/results", http.StatusSeeOther)
 }
 
@@ -180,4 +189,8 @@ func Htmltemplate(res http.ResponseWriter, req *http.Request) {
 		Title: "MyCarTravel Results",
 	}
 	Render(res, "src/templates/test.html", data)
+}
+
+func Wrong(res http.ResponseWriter, req *http.Request) {
+	Render(res, "src/templates/error.html", nil)
 }

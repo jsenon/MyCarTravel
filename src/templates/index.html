@@ -5,22 +5,37 @@
 		<title>{{.Title}}</title>
 	</head>
 	<body>
-		<h1>{{.Title}}</h1>
-		For information you have set Google API key to: {{.Myapikey}}
-		</br>
-		</br>
+		<h1 style="color: #5e9ca0;"><span style="color: #2b2301;">Welcome to MyCarTravel !</span></h1>
+		<h2 style="color: #2e6c80;">How to use the Calculator:</h2>
+		<p>Enter your Origin and Destination in appropriate field. You can set your travel mode to walkin, cycling, or by default driving mode.&nbsp;</p>
+		<p>&nbsp;</p>
 		<form action="/send" method="POST" novalidate>
-			<div>
-				<label>Your Origin:</label>
-				<input type="text" name="origin">
-			</div>
-			<div>
-				<label>Your Destination:</label>
-				<input type="text" name="destination">  
-			</div>
-			<div>
-				<input type="submit" value="Send Calculation">
-			</div>
+			<table style="height: 21px;" width="471">
+				<tbody>
+				<tr>
+				<td>
+					<img style="float: left;" src="https://html-online.com/img/01-interactive-connection.png" alt="interactive connection" width="45" /> Your Origin: <input type="text" name="origin">&nbsp;
+				</td>
+				<td><img style="float: left;" src="https://html-online.com/img/02-html-clean.png" alt="html cleaner" width="45" />Your Destination: <input type="text" name="destination"></td>
+				</tr>
+				</tbody>
+			</table>
+			<p><img style="float: left;" src="https://html-online.com/img/6-table-div-html.png" alt="html table div" width="45" /></p>
+			<p>
+				<div>
+					<input type="radio" name="travelmode" value="driving" checked> Driving
+					<input type="radio" name="travelmode" value="walking"> Walking
+	  				<input type="radio" name="travelmode" value="bicycling"> Bicycling
+	  			</div>
+	  			&nbsp;
+	  		</p>
+			
+			<input type="submit" value="Send Calculation"> &nbsp; &nbsp; &nbsp;&nbsp;</li>
+			
+			<h2 style="color: #2e6c80;"><strong>Enjoy!</strong></h2>
+			<p><strong>&nbsp;</strong></p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
 		</form>
 	</body>
 </html>

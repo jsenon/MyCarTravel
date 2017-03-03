@@ -52,6 +52,7 @@ func main() {
 	http.HandleFunc("/hello", webserver.Index)
 	http.HandleFunc("/send", webserver.CheckFields)
 	http.HandleFunc("/results", webserver.Results)
+	http.HandleFunc("/error", webserver.Wrong)
 	// Test Web page from template
 	http.HandleFunc("/htmltemplate", webserver.Htmltemplate)
 
