@@ -145,31 +145,38 @@ func CheckFields(res http.ResponseWriter, req *http.Request) {
 	Depart = req.FormValue("origin")
 	Finish = req.FormValue("destination")
 	Travelmode = req.FormValue("travelmode")
-	fmt.Println("mode: ", Travelmode)
+	// Check if Origin and Destination exist
+	if Depart != "" && Finish != "" {
 
-	url, erro := http.Get("https://maps.googleapis.com/maps/api/distancematrix/json" + "?units=metric&origins=" + Depart + "&destinations=" + Finish + "&mode=" + Travelmode + "&key=" + MyApiKey)
+		fmt.Println("mode: ", Travelmode)
 
-	if erro != nil {
-		// handle error
-		http.Redirect(res, req, "/error", http.StatusSeeOther)
-		fmt.Println("error:", erro)
-		fmt.Println("res:", res)
-		return
-	}
-	defer url.Body.Close()
-	if erro := json.NewDecoder(url.Body).Decode(&mapsanswer); erro != nil {
-		return
-	}
-	if mapsanswer.Rows[0].Elements[0].Status != "OK" {
-		http.Redirect(res, req, "/error", http.StatusSeeOther)
+		url, erro := http.Get("https://maps.googleapis.com/maps/api/distancematrix/json" + "?units=metric&origins=" + Depart + "&destinations=" + Finish + "&mode=" + Travelmode + "&key=" + MyApiKey)
+
+		if erro != nil {
+			// handle error
+			http.Redirect(res, req, "/error", http.StatusSeeOther)
+			fmt.Println("error:", erro)
+			fmt.Println("res:", res)
+			return
+		}
+		defer url.Body.Close()
+		if erro := json.NewDecoder(url.Body).Decode(&mapsanswer); erro != nil {
+			return
+		}
+		if mapsanswer.Rows[0].Elements[0].Status != "OK" {
+			http.Redirect(res, req, "/error", http.StatusSeeOther)
+		} else {
+			fmt.Fprintln(res, mapsanswer.OriginAddresses[0])
+			fmt.Fprintln(res, mapsanswer.DestinationAddresses[0])
+			fmt.Fprintln(res, mapsanswer.Rows[0].Elements[0].Duration.Text)
+			fmt.Fprintln(res, mapsanswer.Rows[0].Elements[0].Distance.HumanReadable)
+			fmt.Fprintln(res, mapsanswer.Rows[0].Elements[0].Status)
+		}
+		//http.Redirect(res, req, "/results", http.StatusSeeOther)
 	} else {
-		fmt.Fprintln(res, mapsanswer.OriginAddresses[0])
-		fmt.Fprintln(res, mapsanswer.DestinationAddresses[0])
-		fmt.Fprintln(res, mapsanswer.Rows[0].Elements[0].Duration.Text)
-		fmt.Fprintln(res, mapsanswer.Rows[0].Elements[0].Distance.HumanReadable)
-		fmt.Fprintln(res, mapsanswer.Rows[0].Elements[0].Status)
+		// Handle error, fields origin and destination are not set correctly
+		http.Redirect(res, req, "/error", http.StatusSeeOther)
 	}
-	//http.Redirect(res, req, "/results", http.StatusSeeOther)
 }
 
 // Results Page
