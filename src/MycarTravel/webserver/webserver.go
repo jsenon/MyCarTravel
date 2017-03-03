@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-/*// Function for Rendering templates
+// Function for Rendering templates
 func Render(w http.ResponseWriter, filename string, data interface{}) {
 	tmpl, err := template.ParseFiles(filename)
 	if err != nil {
@@ -18,7 +18,7 @@ func Render(w http.ResponseWriter, filename string, data interface{}) {
 	if err := tmpl.Execute(w, data); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-}*/
+}
 
 // Answer Structure coming from google API
 type DistanceMatrixResponse struct {
@@ -224,4 +224,13 @@ func Results(res http.ResponseWriter, req *http.Request) {
 	}
 	err = t.Execute(res, data)
 	check(err)
+}
+
+func Htmltemplate(res http.ResponseWriter, req *http.Request) {
+	data := struct {
+		Title string
+	}{
+		Title: "MyCarTravel Results",
+	}
+	Render(res, "src/templates/index.html", data)
 }

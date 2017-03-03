@@ -52,6 +52,8 @@ func main() {
 	http.HandleFunc("/hello", webserver.Index)
 	http.HandleFunc("/send", webserver.CheckFields)
 	http.HandleFunc("/results", webserver.Results)
+	// Test Web page from template
+	http.HandleFunc("/htmltemplate", webserver.Htmltemplate)
 
 	// Init WebServer
 	http.ListenAndServe(":9000", nil)
