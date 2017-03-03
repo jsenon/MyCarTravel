@@ -119,40 +119,6 @@ var MyApiKey = os.Getenv("GOOGLE_APIKEY")
 
 // Starting point of MyTravelCar
 func Index(res http.ResponseWriter, req *http.Request) {
-	const tpl = `
-	<!DOCTYPE html>
-	 	<html>
-		<head>
-	  		<meta charset="UTF-8">
-	  		<title>{{.Title}}</title>
-		</head>
-	    <body>
-	    	<h1>{{.Title}}</h1>
-	    	For information you have set Google API key to: {{.Myapikey}}
-	    	</br>
-	    	</br>
-	    	<form action="/send" method="POST" novalidate>
-	    		<div>
-	    			<label>Your Origin:</label>
-	    			<input type="text" name="origin">
-	    		</div>
-	    		<div>
-	    			<label>Your Destination:</label>
-	    			<input type="text" name="destination">  
-	    		</div>
-	    		<div>
-	    			<input type="submit" value="Send Calculation">
-	    		</div>
-	    	</form>
-	   </body>
-	 </html>`
-	check := func(err error) {
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
-	t, err := template.New("webpage").Parse(tpl)
-	check(err)
 	data := struct {
 		Title    string
 		Myapikey string
@@ -161,8 +127,7 @@ func Index(res http.ResponseWriter, req *http.Request) {
 		Myapikey: "toto",
 	}
 	data.Myapikey = MyApiKey
-	err = t.Execute(res, data)
-	check(err)
+	Render(res, "src/templates/index.html", data)
 }
 
 // For future Usage, Check and validate fields and redirect to results page
@@ -232,5 +197,5 @@ func Htmltemplate(res http.ResponseWriter, req *http.Request) {
 	}{
 		Title: "MyCarTravel Results",
 	}
-	Render(res, "src/templates/index.html", data)
+	Render(res, "src/templates/test.html", data)
 }

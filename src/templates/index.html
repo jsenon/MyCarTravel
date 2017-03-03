@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>{{.Title}}</title>
+	</head>
+	<body>
+		<h1>{{.Title}}</h1>
+		For information you have set Google API key to: {{.Myapikey}}
+		</br>
+		</br>
+		<form action="/send" method="POST" novalidate>
+			<div>
+				<label>Your Origin:</label>
+				<input type="text" name="origin">
+			</div>
+			<div>
+				<label>Your Destination:</label>
+				<input type="text" name="destination">  
+			</div>
+			<div>
+				<input type="submit" value="Send Calculation">
+			</div>
+		</form>
+	</body>
+</html>
