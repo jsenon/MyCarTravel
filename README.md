@@ -20,7 +20,7 @@ $ go build MyCarTravel
 Run WebApp
 ```
 $ export GOOGLE_APIKEY=YOURAPIKEY
-$ ./mycartravel
+$ ./MyCarTravel
 ```
 
 Command line function is also available in program
