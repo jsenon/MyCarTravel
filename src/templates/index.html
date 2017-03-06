@@ -3,14 +3,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>{{.Title}}</title>
-		
-		<link rel="stylesheet" href="cover.css">
 
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-		<!-- Optional theme -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -18,38 +13,59 @@
 		<!-- Font Awesome -->
 		<link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
+		<link rel="stylesheet" href="cover.css">
+
 	</head>
 	<body>
+	
+	<div class="site-wrapper">
+		<div class="site-wrapper-inner">
+			<div class="cover-container">
 
-		<div class="container">
-			<div class="row">
-                <div class="col-md-4">
-                	<div class="panel panel-primary">
-                		<div class="panel-heading">
-		                	<i class="fa" aria-hidden="true">Enter your Origin and Destination in appropriate field</i>
-		                </div>
-		                <div class="panel-body">
-							<form action="/send" method="POST" novalidate>
-								<i class="fa" aria-hidden="true">
-									Your Origin: <input type="text" name="origin" class="form-control">
-									<br>
-									Your Destination: <input type="text" name="destination" class="form-control">
-									<p>
-										<div>
-											<input class="btn btn-primary" type="radio" name="travelmode" value="driving" checked> Driving
-											<input class="btn btn-primary" type="radio" name="travelmode" value="walking"> Walking
-							  				<input class="btn btn-primary" type="radio" name="travelmode" value="bicycling"> Bicycling
-							  			</div>
-							  		</p>
-									
-									<input class="btn btn-lg btn-primary" type="submit" value="Send Calculation">
-								</i>
-							</form>
-						</div>
-
+				<div class="masthead clearfix">
+					<div class="inner">
+						<h3 class="masthead-brand"> MyCarTravel</h3>
+						<nav>
+							<ul class="nav masthead-nav">
+								<li class="active"><a href="/hello">Home</a></li>
+								<li><a href="#">Features</a></li>
+								<li><a href="#">Contact</a></li>
+							</ul>
+						</nav>
 					</div>
 				</div>
+
+				<div class="inner cover">
+					<h4 class="cover-heading fa">
+						Enter your Origin and Destination in appropriate field:
+					</h4>
+					<p class="lead fa">
+						<form action="/send" method="POST" novalidate>
+								Your Origin:<input type="text" name="origin" class="form-control">
+								<br>
+								Your Destination:<input type="text" name="destination" class="form-control">
+					</p>
+					<p class="lead fa">
+								<input type="radio" name="travelmode" value="driving" checked> Driving
+								<input type="radio" name="travelmode" value="walking"> Walking
+								<input type="radio" name="travelmode" value="bicycling"> Bicycling
+					</p>
+					<br>
+					<p class="lead fa">
+								<input class="btn btn-lg btn-primary fa" type="submit" value="Send Calculation">
+						</form>
+				</div>
+
+				<div class="mastfoot">
+					<div class="inner">
+						<p>
+						Made by somebody
+						</p>
+					</div>
+				</div>
+
 			</div>
 		</div>
+	</div>
 	</body>
 </html>
