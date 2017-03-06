@@ -82,6 +82,11 @@ type TransitMode string
 // TrafficModel specifies traffic prediction model when requesting future directions.
 type TrafficModel string
 
+// Export Option transport mode
+type Modetraveldef struct {
+	Name string
+}
+
 // Travel mode preferences.
 const (
 	TravelModeDriving   = Mode("driving")
@@ -121,6 +126,7 @@ const (
 
 var MyApiKey = os.Getenv("GOOGLE_APIKEY")
 var Mapsanswer DistanceMatrixResponse
+var Modetravel Modetraveldef
 
 // Starting point of MyTravelCar
 func Index(res http.ResponseWriter, req *http.Request) {
@@ -148,7 +154,9 @@ func CheckFields(res http.ResponseWriter, req *http.Request) {
 	Depart = req.FormValue("origin")
 	Finish = req.FormValue("destination")
 	Travelmode = req.FormValue("travelmode")
+	Modetravel.Name = req.FormValue("travelmode")
 
+	fmt.Println("Modetravel: ", Modetravel.Name)
 	fmt.Println("Depart: ", Depart)
 	fmt.Println("Finish: ", Finish)
 
@@ -179,6 +187,7 @@ func CheckFields(res http.ResponseWriter, req *http.Request) {
 
 	//Escape particular strings. It escapes only five such characters: <, >, &, '
 	fmt.Println(html.EscapeString(Finish2))
+	fmt.Println(html.EscapeString(Depart2))
 
 	url, erro := http.Get("https://maps.googleapis.com/maps/api/distancematrix/json" + "?units=metric&origins=" + Depart2 + "&destinations=" + Finish2 + "&mode=" + Travelmode + "&key=" + MyApiKey)
 
@@ -218,13 +227,16 @@ func Results(res http.ResponseWriter, req *http.Request) {
 		Destination string
 		Duration    string
 		Distance    string
+		Mode        string
 	}{
 		Title:       "MyCarTravel Results",
 		Origin:      Mapsanswer.OriginAddresses[0],
 		Destination: Mapsanswer.DestinationAddresses[0],
 		Duration:    Mapsanswer.Rows[0].Elements[0].Duration.Text,
 		Distance:    Mapsanswer.Rows[0].Elements[0].Distance.HumanReadable,
+		Mode:        Modetravel.Name,
 	}
+	fmt.Println("Modetravel: ", Modetravel.Name)
 
 	// Use Mapsanswer for results screen
 	Render(res, "src/templates/results.html", data)
@@ -248,12 +260,15 @@ func Error(res http.ResponseWriter, req *http.Request) {
 }
 
 func NotCovered(res http.ResponseWriter, req *http.Request) {
+	fmt.Println("Modetravel: ", Modetravel.Name)
 	data := struct {
 		Title string
 		Error string
+		Mode  string
 	}{
 		Title: "MyCarTravel Results",
-		Error: "Sorry, your search appears to be outside our current coverage area for driving.",
+		Error: "Sorry, your search appears to be outside our current coverage area for",
+		Mode:  Modetravel.Name,
 	}
 	Render(res, "src/templates/notcovered.html", data)
 }
