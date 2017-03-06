@@ -137,7 +137,8 @@ func Index(res http.ResponseWriter, req *http.Request) {
 		Title:    "MyCarTravel",
 		Myapikey: "toto",
 	}
-	data.Myapikey = MyApiKey
+	data.Myapikey = "https://maps.googleapis.com/maps/api/js?key=" + MyApiKey + "&libraries=places"
+	fmt.Println(data.Myapikey)
 	Render(res, "src/templates/index.html", data)
 }
 
@@ -167,19 +168,19 @@ func CheckFields(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	Depart2 := strings.Replace(Depart, " ", "-", -1)
+	Depart2 := strings.Replace(Depart, " ", "", -1)
 	fmt.Println("Depart Replace: ", Depart2)
 
-	Finish2 := strings.Replace(Finish, " ", "-", -1)
+	Finish2 := strings.Replace(Finish, " ", "", -1)
 	fmt.Println("Depart Replace: ", Finish2)
 
 	// Input English Letters
-	if m, _ := regexp.MatchString("^[a-zA-Z-']+$", Depart2); !m {
+	if m, _ := regexp.MatchString("^[a-zA-Z-',]+$", Depart2); !m {
 		http.Redirect(res, req, "/error", http.StatusSeeOther)
 		fmt.Println("NON ENGLISH CHARACTERS")
 		return
 	}
-	if m, _ := regexp.MatchString("^[a-zA-Z-']+$", Finish2); !m {
+	if m, _ := regexp.MatchString("^[a-zA-Z-',]+$", Finish2); !m {
 		http.Redirect(res, req, "/error", http.StatusSeeOther)
 		fmt.Println("NON ENGLISH CHARACTERS")
 		return
