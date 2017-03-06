@@ -3,24 +3,38 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>{{.Title}}</title>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<!-- Font Awesome -->
+		<link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 	</head>
 		<body>
-		<h1 style="color: #5e9ca0;"><span style="color: #2b2301;">{{.Title}}</span></h1>
-		<h2 style="color: #2e6c80;">Your Result:</h2>
-		<table style="height: 21px;" width="390">
-			<tbody>
-				<tr>
-				<td><b>Origin</b></td><td>{{.Origin}}</td>
-				<td><b>Destination</b></td><td>{{.Destination}}</td>
-				</tr>
-			</tbody>
-		</table>
-		<table style="height: 21px;" width="450">
-			<tbody>
-				<tr>
-				<td>It will take {{.Duration}} for {{.Distance}}&nbsp;</td>
-				</tr>
-			</tbody>
-		</table>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<i class="fa" aria-hidden="true">{{.Title}}</i>
+							</div>
+							<div class="panel-body">
+								<i class="fa" aria-hidden="true">Your Result:
+									<br>
+									<br>
+									Origin {{.Origin}}
+									<br>
+									Destination {{.Destination}}
+									<br>
+									<br>
+									It will take {{.Duration}} for {{.Distance}}
+								</i>
+							</div>
+						</div>
+					 </div>
+				</div>
+			</div>
 		</body>
 </html>
