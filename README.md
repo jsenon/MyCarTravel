@@ -7,6 +7,7 @@ Weberserver for Distance and time calculation based on Google MAP API
 
 You need to have:
 
+* Go 1.8
 * Go Environment properly set
 * Google API Key 
 
@@ -14,13 +15,13 @@ You need to have:
 
 Build WebApp
 ```sh
-$ go build MyCarTravel
+$ go build src/MycarTravel/mycartravel.go
 ```
 
 Run WebApp
 ```
 $ export GOOGLE_APIKEY=YOURAPIKEY
-$ ./MyCarTravel
+$ ./mycartravel
 ```
 
 Command line function is also available in program
