@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"net/http"
 	"os"
+	"regexp"
 )
 
 // Function for Rendering templates
@@ -154,6 +155,18 @@ func CheckFields(res http.ResponseWriter, req *http.Request) {
 	if len(req.Form["origin"][0]) == 0 || len(req.Form["destination"][0]) == 0 {
 		http.Redirect(res, req, "/error", http.StatusSeeOther)
 		fmt.Println("ORIGIN OR DESTINATION NULL")
+		return
+	}
+
+	// Input English Letters
+	if m, _ := regexp.MatchString("^[a-zA-Z]+$", req.Form.Get("origin")); !m {
+		http.Redirect(res, req, "/error", http.StatusSeeOther)
+		fmt.Println("NON ENGLISH CHARACTERS")
+		return
+	}
+	if m, _ := regexp.MatchString("^[a-zA-Z]+$", req.Form.Get("destination")); !m {
+		http.Redirect(res, req, "/error", http.StatusSeeOther)
+		fmt.Println("NON ENGLISH CHARACTERS")
 		return
 	}
 
