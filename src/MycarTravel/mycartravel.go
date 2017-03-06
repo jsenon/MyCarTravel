@@ -30,6 +30,8 @@ func main() {
 	http.HandleFunc("/send", webserver.CheckFields)
 	http.HandleFunc("/results", webserver.Results)
 	http.HandleFunc("/error", webserver.Wrong)
+	http.HandleFunc("/notcovered", webserver.NotCovered)
+
 	// Test Web page from template
 	http.HandleFunc("/htmltemplate", webserver.Htmltemplate)
 	// Init WebServer

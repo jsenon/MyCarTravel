@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"regexp"
+	"strings"
 )
 
 // Function for Rendering templates
@@ -158,22 +159,28 @@ func CheckFields(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	Depart2 := strings.Replace(Depart, " ", "-", -1)
+	fmt.Println("Depart Replace: ", Depart2)
+
+	Finish2 := strings.Replace(Finish, " ", "-", -1)
+	fmt.Println("Depart Replace: ", Finish2)
+
 	// Input English Letters
-	if m, _ := regexp.MatchString("^[a-zA-Z]+$", req.Form.Get("origin")); !m {
+	if m, _ := regexp.MatchString("^[a-zA-Z-']+$", Depart2); !m {
 		http.Redirect(res, req, "/error", http.StatusSeeOther)
 		fmt.Println("NON ENGLISH CHARACTERS")
 		return
 	}
-	if m, _ := regexp.MatchString("^[a-zA-Z]+$", req.Form.Get("destination")); !m {
+	if m, _ := regexp.MatchString("^[a-zA-Z-']+$", Finish2); !m {
 		http.Redirect(res, req, "/error", http.StatusSeeOther)
 		fmt.Println("NON ENGLISH CHARACTERS")
 		return
 	}
 
 	//Escape particular strings. It escapes only five such characters: <, >, &, '
-	fmt.Println(html.EscapeString(Finish))
+	fmt.Println(html.EscapeString(Finish2))
 
-	url, erro := http.Get("https://maps.googleapis.com/maps/api/distancematrix/json" + "?units=metric&origins=" + Depart + "&destinations=" + Finish + "&mode=" + Travelmode + "&key=" + MyApiKey)
+	url, erro := http.Get("https://maps.googleapis.com/maps/api/distancematrix/json" + "?units=metric&origins=" + Depart2 + "&destinations=" + Finish2 + "&mode=" + Travelmode + "&key=" + MyApiKey)
 
 	if erro != nil {
 		// handle error
@@ -186,10 +193,19 @@ func CheckFields(res http.ResponseWriter, req *http.Request) {
 	if erro := json.NewDecoder(url.Body).Decode(&Mapsanswer); erro != nil {
 		return
 	}
-	if Mapsanswer.Rows[0].Elements[0].Status != "OK" {
-		http.Redirect(res, req, "/error", http.StatusSeeOther)
-	} else {
+
+	fmt.Println("Map elements", Mapsanswer.Rows[0].Elements[0].Status)
+
+	// Case OK NOT_FOUND ZERO_RESULTS
+	switch Mapsanswer.Rows[0].Elements[0].Status {
+	case "OK":
 		http.Redirect(res, req, "/results", http.StatusSeeOther)
+	case "NOT_FOUND":
+		http.Redirect(res, req, "/notcovered", http.StatusSeeOther)
+	case "ZERO_RESULTS":
+		http.Redirect(res, req, "/notcovered", http.StatusSeeOther)
+	default:
+		http.Redirect(res, req, "/error", http.StatusSeeOther)
 	}
 
 }
@@ -229,4 +245,15 @@ func Wrong(res http.ResponseWriter, req *http.Request) {
 
 func Error(res http.ResponseWriter, req *http.Request) {
 	Render(res, "src/templates/404.html", nil)
+}
+
+func NotCovered(res http.ResponseWriter, req *http.Request) {
+	data := struct {
+		Title string
+		Error string
+	}{
+		Title: "MyCarTravel Results",
+		Error: "Sorry, your search appears to be outside our current coverage area for driving.",
+	}
+	Render(res, "src/templates/notcovered.html", data)
 }
