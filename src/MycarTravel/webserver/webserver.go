@@ -3,6 +3,7 @@ package webserver
 import (
 	"encoding/json"
 	"fmt"
+	"html"
 	"html/template"
 	"net/http"
 	"os"
@@ -145,34 +146,39 @@ func CheckFields(res http.ResponseWriter, req *http.Request) {
 	Depart = req.FormValue("origin")
 	Finish = req.FormValue("destination")
 	Travelmode = req.FormValue("travelmode")
+
+	fmt.Println("Depart: ", Depart)
+	fmt.Println("Finish: ", Finish)
+
 	// Check if Origin and Destination is not blank
-	if Depart != "" && Finish != "" {
-
-		fmt.Println("mode: ", Travelmode)
-
-		url, erro := http.Get("https://maps.googleapis.com/maps/api/distancematrix/json" + "?units=metric&origins=" + Depart + "&destinations=" + Finish + "&mode=" + Travelmode + "&key=" + MyApiKey)
-
-		if erro != nil {
-			// handle error
-			http.Redirect(res, req, "/error", http.StatusSeeOther)
-			fmt.Println("error:", erro)
-			fmt.Println("res:", res)
-			return
-		}
-		defer url.Body.Close()
-		if erro := json.NewDecoder(url.Body).Decode(&Mapsanswer); erro != nil {
-			return
-		}
-		if Mapsanswer.Rows[0].Elements[0].Status != "OK" {
-			http.Redirect(res, req, "/error", http.StatusSeeOther)
-		} else {
-			http.Redirect(res, req, "/results", http.StatusSeeOther)
-		}
-		//http.Redirect(res, req, "/results", http.StatusSeeOther)
-	} else {
-		// Handle error, fields origin and destination are not set correctly
+	if len(req.Form["origin"][0]) == 0 || len(req.Form["destination"][0]) == 0 {
 		http.Redirect(res, req, "/error", http.StatusSeeOther)
+		fmt.Println("ORIGIN OR DESTINATION NULL")
+		return
 	}
+
+	//Escape particular strings. It escapes only five such characters: <, >, &, '
+	fmt.Println(html.EscapeString(Finish))
+
+	url, erro := http.Get("https://maps.googleapis.com/maps/api/distancematrix/json" + "?units=metric&origins=" + Depart + "&destinations=" + Finish + "&mode=" + Travelmode + "&key=" + MyApiKey)
+
+	if erro != nil {
+		// handle error
+		http.Redirect(res, req, "/error", http.StatusSeeOther)
+		fmt.Println("error:", erro)
+		fmt.Println("res:", res)
+		return
+	}
+	defer url.Body.Close()
+	if erro := json.NewDecoder(url.Body).Decode(&Mapsanswer); erro != nil {
+		return
+	}
+	if Mapsanswer.Rows[0].Elements[0].Status != "OK" {
+		http.Redirect(res, req, "/error", http.StatusSeeOther)
+	} else {
+		http.Redirect(res, req, "/results", http.StatusSeeOther)
+	}
+
 }
 
 // Results Page
