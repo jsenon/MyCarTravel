@@ -26,7 +26,7 @@ https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=
 func main() {
 	// Redirect Page
 	http.HandleFunc("/hello", webserver.Index)
-	http.HandleFunc("/", webserver.Index)
+	http.HandleFunc("/", webserver.Error)
 	http.HandleFunc("/send", webserver.CheckFields)
 	http.HandleFunc("/results", webserver.Results)
 	http.HandleFunc("/error", webserver.Wrong)

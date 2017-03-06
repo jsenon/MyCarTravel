@@ -207,3 +207,7 @@ func Htmltemplate(res http.ResponseWriter, req *http.Request) {
 func Wrong(res http.ResponseWriter, req *http.Request) {
 	Render(res, "src/templates/error.html", nil)
 }
+
+func Error(res http.ResponseWriter, req *http.Request) {
+	Render(res, "src/templates/404.html", nil)
+}
